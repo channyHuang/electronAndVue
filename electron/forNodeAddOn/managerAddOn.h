@@ -9,15 +9,19 @@
 using namespace v8;
 using namespace Nan;
 
-class ManagerAddOn
+#include <string>
+#include <fstream>
+
+class ManagerAddOn : public AsyncProgressWorker
 {
 public:
-	ManagerAddOn();
+	ManagerAddOn(Callback* callback) : AsyncProgressWorker(callback);
 	virtual ~ManagerAddOn();
 
 	bool init();
+	void writeLog(std::string str);
 private:
-
+	Callback* m_callback;
 };
 #endif
 

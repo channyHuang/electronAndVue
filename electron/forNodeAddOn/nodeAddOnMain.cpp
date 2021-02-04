@@ -19,27 +19,25 @@ namespace PMonitor {
     using v8::Value;
 
     void Init(const FunctionCallbackInfo<Value>& args)
-    {/*
-        Callback* progress = new Callback(args[0].As<v8::Function>());
-        Callback* callback = new Callback(args[1].As<v8::Function>());
-        CInterfaceManager* pTemp = new CInterfaceManager(callback, progress);
-        CInterfaceManager::SetInst(pTemp); //设置对象，全局唯一
-        AsyncQueueWorker(pTemp);
+    {
+        Callback* callback = new Callback(args[0].As<v8::Function>());
+        ManagerAddOn* pManager = new ManagerAddOn(callback);
+        AsyncQueueWorker(pManager);
 
-        int flag = CInterfaceManager::GetInst()->Init(); //初始化
+        int flag = pManager->init();
 
         Isolate* isolate = args.GetIsolate();
         Local<Number> num = Number::New(isolate, flag);
-        args.GetReturnValue().Set(num);*/
+        args.GetReturnValue().Set(num);
     }
 
     void Log(const FunctionCallbackInfo<Value>& args)
-    {/*
+    {
         Isolate* isolate = args.GetIsolate();
-        Local<String> filepath = Local<String>::Cast(args[0]);
-        String::Utf8Value filePath(isolate, filepath);
+        Local<String> sMsg = Local<String>::Cast(args[0]);
+        String::Utf8Value sMessage(isolate, sMsg);
 
-        CInterfaceManager::GetInst()->WriteLog(string(*filePath).c_str());*/
+        CInterfaceManager::GetInst()->WriteLog(string(*sMessage).c_str());
     }
 
     void VerifyFinger(const FunctionCallbackInfo<Value>& args)
