@@ -36,7 +36,7 @@ bool ManagerAddOn::init()
         FunParamValidReturnVoidDLL = (TYPE_FunParamValidReturnVoid)GetProcAddress(hDLL, "funParamValidReturnVoid");
         FunParamVoidReturnValidDLL = (TYPE_FunParamVoidReturnValid)GetProcAddress(hDLL, "funParamVoidReturnValid");
         FunParamValidReturnValidDLL = (TYPE_FuncParamValidReturnValid)GetProcAddress(hDLL, "funParamValidReturnValid");
-        FunSetCallbackDLL = (TYPE_FuncSetCallback)GetProcAddress(hDLL, "funSetCallback");
+        FunSetCallbackDLL = (TYPE_FuncSetCallback)GetProcAddress(hDLL, "funSetNetworkCallback");
         FunRequestNetworkAndCallbackDLL = (TYPE_FunRequestNetworkAndCallback)GetProcAddress(hDLL, "funRequestNetworkAndCallback");
 
         m_bLoad = true;
@@ -75,21 +75,21 @@ bool ManagerAddOn::init()
 
 void ManagerAddOn::funParamVoidReturnVoid()
 {
-    if (FunParamVoidReturnVoidDLL) {
+    if (FunParamVoidReturnVoidDLL != nullptr) {
         FunParamVoidReturnVoidDLL();
     }
 }
 
 void ManagerAddOn::funParamValidReturnVoid(const char* pString, int nNumber)
 {
-    if (FunParamValidReturnVoidDLL) {
+    if (FunParamValidReturnVoidDLL != nullptr) {
         FunParamValidReturnVoidDLL(pString, nNumber);
     }
 }
 
 char* ManagerAddOn::funParamVoidReturnValid()
 {
-    if (FunParamVoidReturnValidDLL) {
+    if (FunParamVoidReturnValidDLL != nullptr) {
         return FunParamVoidReturnValidDLL();
     }
     return nullptr;
@@ -105,13 +105,13 @@ int ManagerAddOn::funParamValidReturnValid(const char* pString, int nNumber)
 
 void ManagerAddOn::setCallback(CBFun_NetworkCallback pFunc, void* pUser)
 {
-    if (FunSetCallbackDLL) {
+    if (FunSetCallbackDLL != nullptr) {
         FunSetCallbackDLL(pFunc, pUser);
     }
 }
 void ManagerAddOn::requestNetworkAndCallback(std::string sUserName, std::string sPassword)
 {
-    if (FunRequestNetworkAndCallbackDLL) {
+    if (FunRequestNetworkAndCallbackDLL != nullptr) {
         FunRequestNetworkAndCallbackDLL(sUserName, sPassword);
     }
 }

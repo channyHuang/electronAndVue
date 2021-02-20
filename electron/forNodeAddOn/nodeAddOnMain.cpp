@@ -38,7 +38,7 @@ namespace PMonitor {
         Nan::HandleScope scope;
         StCallbackData* data = (StCallbackData*)handle->data;
         v8::Local<v8::Value> argv[2] = { Nan::New(data->sMsg).ToLocalChecked(), Nan::New((int)data->nSeq) };//数据类型的一些转换
-        data->callback->Call(1, argv);                               //数据回调到js层
+        data->callback->Call(2, argv);                               //数据回调到js层
     }
 
     void __stdcall FunCPlusCallback(std::string sMsg, int nSeq, void* pUser)

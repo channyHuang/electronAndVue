@@ -55,6 +55,7 @@ ipcMain.on("CallJsSendToDll", (event, args) => {
   ForNodeAddOn.FuncSetCallback(loginCallbackFunc);
 });
 ipcMain.on("callLoginInDll", (event, args1, args2) => {
-  ForNodeAddOn.FunRequestNetworkAndCallback(args1, args2);
+  console.log('callLoginInDll in main');
   gEvent = event;
+  ForNodeAddOn.FunRequestNetworkAndCallback(args1, args2);
 });

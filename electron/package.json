@@ -7,15 +7,16 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "electron . --enable-logging",
     "build": "electron-packager .",
+    "rebuild": "electron-rebuild",
     "packager": "electron-packager ./ electronVue --platform=win32 --arch=ia32 --out ./electronVue --electron-version 11.2.1 --overwrite --icon=./dist/favicon.ico"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "electron-package": "^0.1.0",
     "nan": "^2.14.2"
   },
   "devDependencies": {
+    "electron": "11.2.1",
     "electron-packager": "^15.2.0"
   }
 }
