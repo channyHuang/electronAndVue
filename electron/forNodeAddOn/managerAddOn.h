@@ -1,27 +1,60 @@
 #ifndef MANAGERADDON_H
 #define MANAGERADDON_H
 
-#include <node.h>
-#include <nan.h>
-#include <v8.h>
-#include <uv.h>
-
-using namespace v8;
-using namespace Nan;
-
 #include <string>
 #include <fstream>
+#include <queue>
+#include <mutex>
+#include "windows.h"
 
-class ManagerAddOn : public AsyncProgressWorker
+typedef void(__stdcall* CBFun_NetworkCallback)(std::string sMsg, int nSeq, void* pUser);
+typedef void(*TYPE_FunParamVoidReturnVoid)();
+typedef int(*TYPE_FunParamValidReturnVoid)(const char* pString, int nNumber);
+typedef char* (*TYPE_FunParamVoidReturnValid)();
+typedef int(*TYPE_FuncParamValidReturnValid)(const char* pString, int nNumber);
+typedef int (*TYPE_FuncSetCallback)(CBFun_NetworkCallback pFunc, void* pUser);
+typedef void(*TYPE_FunRequestNetworkAndCallback)(std::string sUserName, std::string sPassword);
+
+class ManagerAddOn
 {
 public:
-	ManagerAddOn(Callback* callback) : AsyncProgressWorker(callback);
+	
+	static ManagerAddOn* getInstance() {
+		if (m_instance == nullptr) {
+			m_instance = new ManagerAddOn();
+		}
+		return m_instance;
+	}
 	virtual ~ManagerAddOn();
 
+public:
+	ManagerAddOn();
 	bool init();
-	void writeLog(std::string str);
+	bool isLoadingSuccess() {
+		return m_bLoad;
+	}
+
+	void funParamVoidReturnVoid();
+	void funParamValidReturnVoid(const char* pString, int nNumber);
+	char* funParamVoidReturnValid();
+	int funParamValidReturnValid(const char* pString, int nNumber);
+	void setCallback(CBFun_NetworkCallback pFunc, void* pUser);
+	void requestNetworkAndCallback(std::string sUserName, std::string sPassword);
+
 private:
-	Callback* m_callback;
+	void writeManagerLog(std::string sMsg);
+
+	static ManagerAddOn* m_instance;
+	TYPE_FunParamVoidReturnVoid FunParamVoidReturnVoidDLL = nullptr;
+	TYPE_FunParamValidReturnVoid FunParamValidReturnVoidDLL = nullptr;
+	TYPE_FunParamVoidReturnValid FunParamVoidReturnValidDLL = nullptr;
+	TYPE_FuncParamValidReturnValid FunParamValidReturnValidDLL = nullptr;
+	TYPE_FuncSetCallback FunSetCallbackDLL = nullptr;
+	TYPE_FunRequestNetworkAndCallback FunRequestNetworkAndCallbackDLL = nullptr;
+
+	bool m_bLoad = false;
+	HINSTANCE hDLL = nullptr;
 };
+
 #endif
 

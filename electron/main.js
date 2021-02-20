@@ -37,9 +37,24 @@ app.on("activate", () => {
   }
 });
 
+let gEvent;
+function loginCallbackFunc(sMsg, nSeq) {
+  console.log('loginCallbackFunc in main ' + sMsg + " " + nSeq);
+  gEvent.sender.send('loginCallback', sMsg, nSeq);
+}
+
 ipcMain.on("CallJsSendToMain", (event, args) => {
   event.sender.send("CallJsSendToMainb", "send callback to vue " + args);
 });
 ipcMain.on("CallJsSendToMainSync", (event, args) => {
-  event.returnValue = ForNodeAddOn.VerifyFinger();
+  event.returnValue = ForNodeAddOn.FunParamVoidReturnValid();
+});
+ipcMain.on("CallJsSendToDll", (event, args) => {
+  console.log('CallJsSendToDll in main');
+  ForNodeAddOn.Init();
+  ForNodeAddOn.FuncSetCallback(loginCallbackFunc);
+});
+ipcMain.on("callLoginInDll", (event, args1, args2) => {
+  ForNodeAddOn.FunRequestNetworkAndCallback(args1, args2);
+  gEvent = event;
 });

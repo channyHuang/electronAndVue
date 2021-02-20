@@ -1,7 +1,3 @@
-# electronAndVue
-
-practice of a new framework: electron
-
 # electron项目增加vue支持
 
 背景：需求已有electron项目，要求使用element-ui，而element-ui是基于[vue](https://cn.vuejs.org) 的，所以只能使用electron+vue的结构。
@@ -18,7 +14,7 @@ pps: 考虑到墙的问题，可使用淘宝镜像，后续用cnpm代替npm
 npm install -g cnpm --registry=https://registry.npm.taobao.org
 ```
 
-2. npm安装electron 
+2. npm安装electron
 
 ```
 npm install -g electron
@@ -110,7 +106,7 @@ vue create新建项目后的目录
 
 > src
 
->> assets 资源目录 
+>> assets 资源目录
 
 >> components 组件，类似于c++项目中自定义的控件
 
@@ -170,7 +166,7 @@ void CheckDeviceAndFunc(const FunctionCallbackInfo<Value>& args)
       {
           bRes = false;
       }
-      else 
+      else
       {
           bRes = (checkDeviceAvaiableDLL());
       }
@@ -188,6 +184,7 @@ NODE_MODULE(NODE_GYP_MODULE_NAME, RegisterModule)
 ```
 
 然后写binding.gyp文件并用node-gyp编译，生成.node文件供js调用。
+
 
 ```
 //binding.gyp
@@ -285,7 +282,7 @@ const FingerRecog = {
         console.log('checkDeviceAndFunc call in fingerRecog.js ' + args);
       });*/
     }
-    
+
 };
 
 module.exports = FingerRecog;
@@ -313,4 +310,5 @@ ELECTRON_BUILDER_BINARIES_MIRROR=http://npm.taobao.org/mirrors/electron-builder-
 ```
 
 上述命令打包后的结果会把node_modules也打包进去导致打包后的整个文件夹十分庞大。。。
+
 

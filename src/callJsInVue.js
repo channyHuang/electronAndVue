@@ -12,6 +12,12 @@ const CallJsInVueClass = {
     CallJsSendToMainSync:function(){
       var res = window.ipcRenderer.sendSync('CallJsSendToMainSync');
       return res;
+    },
+    CallJsSendToDll:function(){
+      window.ipcRenderer.send('CallJsSendToDll');
+    },
+    callLoginInDll:function(){
+      window.ipcRenderer.send('callLoginInDll', 'name', 'password');
     }
 };
 
