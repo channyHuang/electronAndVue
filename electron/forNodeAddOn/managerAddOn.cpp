@@ -111,6 +111,7 @@ void ManagerAddOn::setCallback(CBFun_NetworkCallback pFunc, void* pUser)
 }
 void ManagerAddOn::requestNetworkAndCallback(std::string sUserName, std::string sPassword)
 {
+    writeManagerLog("requestNetworkAndCallback");
     if (FunRequestNetworkAndCallbackDLL != nullptr) {
         FunRequestNetworkAndCallbackDLL(sUserName, sPassword);
     }

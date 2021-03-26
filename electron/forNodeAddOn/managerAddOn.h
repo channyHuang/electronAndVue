@@ -8,11 +8,11 @@
 #include "windows.h"
 
 typedef void(__stdcall* CBFun_NetworkCallback)(std::string sMsg, int nSeq, void* pUser);
-typedef void(__stdcall* TYPE_FunParamVoidReturnVoid)();
+typedef void(* TYPE_FunParamVoidReturnVoid)();
 typedef int(*TYPE_FunParamValidReturnVoid)(const char* pString, int nNumber);
 typedef char* (*TYPE_FunParamVoidReturnValid)();
 typedef int(*TYPE_FuncParamValidReturnValid)(const char* pString, int nNumber);
-typedef int (__stdcall* TYPE_FuncSetCallback)(CBFun_NetworkCallback pFunc, void* pUser);
+typedef int (* TYPE_FuncSetCallback)(CBFun_NetworkCallback pFunc, void* pUser);
 typedef void(*TYPE_FunRequestNetworkAndCallback)(std::string sUserName, std::string sPassword);
 
 
